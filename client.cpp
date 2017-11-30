@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
     int response_len;
     struct Packet packet;    
 
+    string id;
+
     if(argc < 3){
         print("ERR: no ip or port provided!\n");
         exit(1);
@@ -26,7 +28,16 @@ int main(int argc, char *argv[])
     send(sock, "__CLIENT__", 10, 0);
     packet = myrecv(sock, buffer, 1024);
     cout << packet.data << endl;
-    
+    cout << "Please enter your car id: ";
+    while(packet.len > 0){
+        cin >> id;
+        send(sock, id.c_str(), id.length(), 0);
+        packet = myrecv(sock, buffer, 1024);
+        cout << packet.data << endl;
+        if(strncmp(packet.data, "fee", 3) == 0 )
+            break;
+    }
+
     return 0;
 }
 
