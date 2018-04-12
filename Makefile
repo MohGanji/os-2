@@ -25,3 +25,9 @@ client_connect.o: client_connect.cpp client_connect.h utils.h utils.o
 
 clean:
 	rm *.o *.out
+
+runserver: main_server.out
+	./main_server.out 3456 records
+
+runclient: client.out
+	./client.out 127.0.0.1 3456
